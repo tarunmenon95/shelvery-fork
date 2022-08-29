@@ -1,3 +1,4 @@
+from cmath import log
 import boto3
 
 from typing import List
@@ -27,7 +28,8 @@ class ShelveryEBSBackup(ShelveryEC2Backup):
             {'Name': f"tag:{tag_prefix}:{BackupResource.BACKUP_MARKER_TAG}", 'Values': ['true']}
         ])
         backups = []
-
+        
+        self.logger.info("Snapshots: " + str(snapshots))
         # create backup resource objects
         for snap in snapshots['Snapshots']:        
             snap_tags = dict(map(lambda t: (t['Key'], t['Value']), snap['Tags']))
