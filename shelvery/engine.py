@@ -219,6 +219,7 @@ class ShelveryEngine:
         # create and collect backups
         backup_resources = []
         current_retention_type = RuntimeConfig.get_current_retention_type(self)
+        self.logger.info(f"Current Retention Type: {current_retention_type}")
         for r in resources:
             backup_resource = BackupResource(
                 tag_prefix=RuntimeConfig.get_tag_prefix(),
@@ -230,6 +231,7 @@ class ShelveryEngine:
             # Check whether current retention is allowed, if not try next retention type by precedence
             skip_backup = False
 
+            self.logger.info(f"Backup Resource RT: {backup_resource.retention_type}")
             # skip validation if custom retention type
             if backup_resource.retention_type in self.RETENTION_TYPE_PRECEDENCE:
                 # Check whether current retention is allowed, if not try next retention type by precedence
