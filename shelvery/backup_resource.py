@@ -45,6 +45,9 @@ class BackupResource:
         else:
             self.retention_type = self.RETENTION_DAILY
 
+        #TODO Remove this hardcoded yearly example
+        self.retention_type = self.RETENTION_YEARLY
+        
         # determine backup name. Hash of resource id is added to support creating backups
         # with resources having a same name
         if 'Name' in entity_resource.tags:

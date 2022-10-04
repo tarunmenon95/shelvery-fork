@@ -235,20 +235,21 @@ class ShelveryEngine:
             # Check whether current retention is allowed, if not try next retention type by precedence
             skip_backup = False
 
-            self.logger.info(f"Backup Resource RT: {backup_resource.retention_type}")
             # skip validation if custom retention type
             if backup_resource.retention_type in self.RETENTION_TYPE_PRECEDENCE:
                 # Check whether current retention is allowed, if not try next retention type by precedence
                 while not self._verify_retention(backup_resource):
+                    self.logger.info(f"Retention Type: {backup_resource.retention_type} disabled")
                     new_retention_type = self.RETENTION_TYPE_PRECEDENCE[backup_resource.retention_type]
+                    self.logger.info(f"Checking whether retention type: {new_retention_type} is permitted")
                     if new_retention_type:
                         backup_resource.set_retention_type(new_retention_type)
                     else:
                         #Set skip backup to true as daily is set to 0
                         skip_backup = True
-                        break
+                        break 
             else:
-                self.logger.info(f"RT: {backup_resource.retention_type} not found in precedence")
+                self.logger.info(f"Skipping retention check as custom retention type {backup_resource.retention_type} was detected")
 
             # Skip current backup
             if skip_backup:
