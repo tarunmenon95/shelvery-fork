@@ -244,6 +244,8 @@ class ShelveryEngine:
                         #Set skip backup to true as daily is set to 0
                         skip_backup = True
                         break
+            else:
+                self.logger.info(f"RT: {backup_resource.retention_type} not found in precedence")
 
             # Skip current backup
             if skip_backup:
