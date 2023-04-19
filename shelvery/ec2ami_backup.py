@@ -142,6 +142,9 @@ class ShelveryEC2AMIBackup(ShelveryEC2Backup):
                 }
             ]
         )
+        self.logger.info("Instances to backup")
+        self.logger.info(instances)
+        
         while 'NextToken' in instances:
             instances += ec2client.describe_instances(
                 Filters=[
