@@ -39,6 +39,8 @@ class ShelveryEC2AMIBackup(ShelveryEC2Backup):
             self._get_all_entities()
         ))
         for ami in amis:
+            self.logger.info("Logging AMI")  
+            self.logger.info(ami)
             backup = BackupResource.construct(backup_tag_prefix,
                                               ami['ImageId'],
                                               dict(map(lambda x: (x['Key'], x['Value']), ami['Tags'])))
